@@ -1,52 +1,39 @@
-const plus = document.querySelector('.plus')
-const minus = document.querySelector('.minus')
-const board = document.querySelector('.board')
-
-let num = 0
-plus.addEventListener('click', plusNumber)
-minus.addEventListener('click', minusNumber)
-
-function plusNumber() {
-    num = parseInt(board.textContent)
-    num++
-    board.textContent = num
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('https://www.yo-yoo.co.il/rekaim/images/uploads/a1341f.jpg');
+    background-size: cover;
+    
 }
 
-function minusNumber() {
-    num = parseInt(board.textContent)
-    num--
-    board.textContent = num
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
 }
 
 
-let touchStartY;
-
-board.addEventListener('touchstart', handleTouchStart);
-board.addEventListener('touchmove', handleTouchMove);
-
-function handleTouchStart(event) {
-    // Store the initial touch position
-    touchStartY = event.touches[0].clientY;
+.plus, .minus {
+    width: 100px;
+    height: 50px;
+    background-color: rgb(80, 19, 19);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.5rem;
 }
 
-function handleTouchMove(event) {
-    // Determine the direction of the touch move
-    const touchMoveY = event.touches[0].clientY;
-    const direction = touchMoveY > touchStartY ? 'down' : 'up';
+.board-plus, .board-minus {
+    opacity: 0.3;
+    font-size: 0.8rem;
+}
 
-    // Update the number based on the touch direction
-    if (direction === 'up') {
-        num++;
-    } else {
-        num--;
-    }
-
-    // Update the displayed number
-    board.textContent = num;
-
-    // Update the initial touch position for the next move
-    touchStartY = touchMoveY;
-
-    // Prevent the default touch move behavior
-    event.preventDefault();
+.board {
+    font-size: 2rem;
+    margin: 0;
+    padding: 10px 20px;
 }

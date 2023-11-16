@@ -19,29 +19,34 @@ function minusNumber() {
 }
 
 
-document.addEventListener('wheel', handleScroll);
+let touchStartY;
 
-function handleScroll(event) {
-    // Check if the scrolling event originated from the .board element
-    const isScrollOnBoard = event.target.closest('.board') === board;
+board.addEventListener('touchstart', handleTouchStart);
+board.addEventListener('touchmove', handleTouchMove);
 
-    if (isScrollOnBoard) {
-        // Determine the direction of the scroll
-        const direction = event.deltaY > 0 ? 'down' : 'up';
+function handleTouchStart(event) {
+    // Store the initial touch position
+    touchStartY = event.touches[0].clientY;
+}
 
-        // Update the number based on the scroll direction
-        if (direction === 'up') {
-            num++;
-        } else {
-            if (num > 0) {
-                num--;
-            }
-        }
+function handleTouchMove(event) {
+    // Determine the direction of the touch move
+    const touchMoveY = event.touches[0].clientY;
+    const direction = touchMoveY > touchStartY ? 'down' : 'up';
 
-        // Update the displayed number
-        board.textContent = num;
-
-        // Prevent the default scroll behavior
-        event.preventDefault();
+    // Update the number based on the touch direction
+    if (direction === 'up') {
+        num++;
+    } else {
+        num--;
     }
+
+    // Update the displayed number
+    board.textContent = num;
+
+    // Update the initial touch position for the next move
+    touchStartY = touchMoveY;
+
+    // Prevent the default touch move behavior
+    event.preventDefault();
 }
